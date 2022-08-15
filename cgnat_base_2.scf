@@ -294,9 +294,10 @@ ltm default-node-monitor {
     rule none
 }
 ltm virtual /Common/CGN_vs {
-    creation-time 2022-03-09:16:14:26
+    creation-time 2022-08-15:09:54:48
     destination /Common/0.0.0.0:0
-    last-modified-time 2022-03-09:16:14:26
+    ip-protocol tcp
+    last-modified-time 2022-08-15:10:02:38
     mask any
     profiles {
         /Common/fastL4 { }
@@ -687,6 +688,18 @@ security firewall rule-list /Common/_sys_self_allow_management {
     }
 }
 security ip-intelligence policy /Common/ip-intelligence { }
+security protocol-inspection compliance /Common/http_non_crlf_line_break {
+    description "Non CRLF Line Break"
+    documentation "As per HTTP protocol specification, each header line should have CRLF (Carriage Return + Line Feed)(
+) line break. In real HTTP traffic, we may only see LF (
+) as line break. This compliance check comes up for traffic with only LF as a line break."
+    id 11018
+    performance-impact medium
+    protocol "tcp, sctp"
+    risk medium
+    service /Common/http
+    subscription no
+}
 security protocol-inspection compliance-map /Common/map_10426 {
     insp-id 10426
     key-type int
@@ -881,6 +894,21 @@ sys db avr.stats.internal.maxentitiespertable {
 sys db log.ftp.level {
     value "Error"
 }
+sys db ssl.certrequest.commonname {
+    value "bigip2.f5trn.com"
+}
+sys db ssl.certrequest.divisionname {
+    value "Service Training"
+}
+sys db ssl.certrequest.localityname {
+    value "Seattle"
+}
+sys db ssl.certrequest.organizationname {
+    value "F5, Inc."
+}
+sys db ssl.certrequest.stateorprovincename {
+    value "WA"
+}
 sys db tmm.dhcp.client.connection.packets.inprogress.max {
     value "2000"
 }
@@ -1041,7 +1069,7 @@ sys file ssl-cert /Common/f5_api_com.crt {
 }
 sys file ssl-key /Common/f5_api_com.key {
     cache-path /config/filestore/files_d/Common_d/certificate_key_d/:Common:f5_api_com.key_206989_1
-    passphrase $M$Mz$Juf54qiv3K3PssRIQwlcM9y5zfVNrJUCr0Cq1dOuL1gptesSqXmjoj9Xt4N0JVZpGqmCkE5FDtTVX5OXJgumLYMB2+VC3cauKayOpdAAROA=
+    passphrase $M$KJ$H8QrZBkfF7NlNheXJBomfNy5zfVNrJUCr0Cq1dOuL1gptesSqXmjoj9Xt4N0JVZpGqmCkE5FDtTVX5OXJgumLYMB2+VC3cauKayOpdAAROA=
     revision 1
     source-path file:///config/ssl/ssl.key/f5_api_com.key
 }
