@@ -107,6 +107,22 @@ net tunnels tunnel /Common/socks-tunnel {
     description "Tunnel for socks profile"
     profile /Common/tcp-forward
 }
+security nat policy /Common/CGN_policy {
+    rules {
+        NAPT_rule {
+            ip-protocol any
+            source {
+                addresses {
+                    10.10.1.0/24 { }
+                }
+            }
+            translation {
+                source /Common/NAPT
+            }
+        }
+    }
+    traffic-group /Common/traffic-group-1
+}
 security nat source-translation /Common/NAPT {
     addresses {
         40.0.101.0/24 { }
