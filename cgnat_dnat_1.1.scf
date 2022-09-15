@@ -177,43 +177,7 @@ security log profile /Common/CGN_remote_logs {
     }
 }
 security nat policy /Common/CGN_policy {
-    rules {
-        DNAT_rule {
-            ip-protocol any
-            log-profile /Common/CGN_logs
-            source {
-                addresses {
-                    10.10.1.0/24 { }
-                }
-            }
-            translation {
-                source /Common/DNAT
-            }
-        }
-    }
     traffic-group /Common/traffic-group-1
-}
-security nat source-translation /Common/DNAT {
-    addresses {
-        40.0.101.0/24 { }
-    }
-    backup-addresses {
-        40.0.201.0/24 { }
-    }
-    egress-interfaces {
-        /Common/internet_vlan
-    }
-    egress-interfaces-enabled
-    inbound-mode endpoint-independent-filtering
-    mapping {
-        timeout 30
-    }
-    pat-mode deterministic
-    ports {
-        64000-64001 { }
-    }
-    traffic-group /Common/traffic-group-1
-    type dynamic-pat
 }
 sys provision afm {
     level nominal
