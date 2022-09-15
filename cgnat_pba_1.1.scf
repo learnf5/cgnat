@@ -177,46 +177,7 @@ security log profile /Common/CGN_remote_logs {
     }
 }
 security nat policy /Common/CGN_policy {
-    rules {
-        PBA_rule {
-            ip-protocol any
-            source {
-                addresses {
-                    10.10.1.0/24 { }
-                }
-            }
-            translation {
-                source /Common/PBA
-            }
-        }
-    }
     traffic-group /Common/traffic-group-1
-}
-security nat source-translation /Common/PBA {
-    addresses {
-        40.0.101.0/28 { }
-    }
-    egress-interfaces {
-        /Common/internet_vlan
-    }
-    egress-interfaces-enabled
-    inbound-mode endpoint-independent-filtering
-    mapping {
-        timeout 1800
-    }
-    pat-mode pba
-    port-block-allocation {
-        block-idle-timeout 1800
-        block-lifetime 28800
-        block-size 1000
-        client-block-limit 2
-        zombie-timeout 600
-    }
-    ports {
-        1525-65524 { }
-    }
-    traffic-group /Common/traffic-group-1
-    type dynamic-pat
 }
 sys provision afm {
     level nominal
