@@ -30,12 +30,9 @@ ltm virtual /Common/CGN_vs {
     profiles {
         /Common/fastL4 { }
     }
-    security-nat-policy {
-        policy /Common/CGN_policy
-    }
     serverssl-use-sni disabled
     source 0.0.0.0/0
-    translate-address enabled
+    translate-address disabled
     translate-port disabled
     vlans {
         /Common/subscriber_vlan
